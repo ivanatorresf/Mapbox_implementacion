@@ -12,10 +12,12 @@ class FullScreenMap extends StatefulWidget {
 
 class _FullScreenMapState extends State<FullScreenMap> {
   MapboxMapController mapController;
+  final latinoamerica = LatLng(23.005903, -102.160759);
   final center = LatLng(18.918749, -104.073781);
   final center1 = LatLng(20.4323493, -87.01434);
   final center2 = LatLng(32.5265012, -117.120376);
   final center3 = LatLng(19.1788445, -96.2113358);
+  final center4 = LatLng(28.691127, -100.580183);
 
   String selectedStyle =
       'mapbox://styles/ivanflores2021/ckkcw6o2204wr17rqyhhy9gd5';
@@ -56,34 +58,46 @@ class _FullScreenMapState extends State<FullScreenMap> {
   Column botonesFlotantes() {
     return Column(mainAxisAlignment: MainAxisAlignment.end, children: <Widget>[
       FloatingActionButton(
-        child: Icon(Icons.zoom_out),
+        child: Icon(Icons.ac_unit),
         onPressed: () {
           mapController.addSymbol(SymbolOptions(
               geometry: center,
-              // iconSize: 3,
               iconImage: 'assetImage',
-              textField: 'La Ola Verde',
+              iconSize: 0.7,
+              textField: 'Colima',
               textOffset: Offset(0, 2)));
           mapController.addSymbol(SymbolOptions(
               geometry: center1,
-              // iconSize: 3,
               iconImage: 'assetImage',
-              textField: 'Tecoman',
+              iconSize: 0.7,
+              textField: 'Cozumel',
               textOffset: Offset(0, 2)));
           mapController.addSymbol(SymbolOptions(
               geometry: center2,
-              // iconSize: 3,
               iconImage: 'assetImage',
-              textField: 'El Diezmo',
+              iconSize: 0.7,
+              textField: 'Tijuana',
               textOffset: Offset(0, 2)));
           mapController.addSymbol(SymbolOptions(
-              geometry: center3,
-              // iconSize: 3,
-              iconImage: 'assetImage',
-              textField: 'La Ola Verde2',
-              textOffset: Offset(0, 2)));
+            geometry: center3,
+            iconImage: 'assetImage',
+            iconSize: 0.7,
+            textField: 'Veracruz',
+            textOffset: Offset(0, 2),
+          ));
         },
       ),
+      FloatingActionButton(
+          child: Icon(Icons.ac_unit),
+          onPressed: () {
+            mapController.addSymbol(SymbolOptions(
+              geometry: center4,
+              iconImage: 'assetImage',
+              iconSize: 0.7,
+              textField: 'Coahuila',
+              textOffset: Offset(0, 2),
+            ));
+          }),
       FloatingActionButton(
         child: Icon(Icons.zoom_in),
         onPressed: () {
@@ -114,7 +128,7 @@ class _FullScreenMapState extends State<FullScreenMap> {
     return MapboxMap(
       styleString: selectedStyle,
       onMapCreated: _onMapCreated,
-      initialCameraPosition: CameraPosition(target: center, zoom: 6),
+      initialCameraPosition: CameraPosition(target: latinoamerica, zoom: 3),
     );
   }
 }
