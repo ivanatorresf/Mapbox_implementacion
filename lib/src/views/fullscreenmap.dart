@@ -13,11 +13,21 @@ class FullScreenMap extends StatefulWidget {
 class _FullScreenMapState extends State<FullScreenMap> {
   MapboxMapController mapController;
   final latinoamerica = LatLng(23.005903, -102.160759);
-  final center = LatLng(18.918749, -104.073781);
-  final center1 = LatLng(20.4323493, -87.01434);
-  final center2 = LatLng(32.5265012, -117.120376);
-  final center3 = LatLng(19.1788445, -96.2113358);
-  final center4 = LatLng(28.691127, -100.580183);
+  final centerBH = LatLng(34.0825439, -118.4345535);
+  final centerCDMX = LatLng(19.39068, -99.2836999);
+  final centerCul = LatLng(24.8049008, -107.4933547);
+  final centerElPaTex = LatLng(31.8110563, -106.5646034);
+  final centerGua = LatLng(20.6737777, -103.4054538);
+  final centerMxl = LatLng(32.6137391, -115.5203314);
+  final centerMon = LatLng(25.8695013, -103.0146702);
+  final centerSD = LatLng(32.8242404, -117.3891708);
+  final centerTij = LatLng(32.49674, -117.0178474);
+  final centerHunt = LatLng(33.5886801, -118.2697613);
+  final centerSnJos = LatLng(37.2967792, -121.9574983);
+  final centerMcAlln = LatLng(26.2259141, -98.396727);
+  final centerCdJua = LatLng(31.6538179, -106.5890216);
+  final centerHouTex = LatLng(29.8168824, -95.6814853);
+  final centerBronwnsTex = LatLng(26.0288184, -97.5991826);
 
   String selectedStyle =
       'mapbox://styles/ivanflores2021/ckkcw6o2204wr17rqyhhy9gd5';
@@ -61,28 +71,92 @@ class _FullScreenMapState extends State<FullScreenMap> {
         child: Icon(Icons.ac_unit),
         onPressed: () {
           mapController.addSymbol(SymbolOptions(
-              geometry: center,
+              geometry: centerBH,
               iconImage: 'assetImage',
               iconSize: 0.7,
-              textField: 'Colima',
+              textField: 'Beverly Hills',
               textOffset: Offset(0, 2)));
           mapController.addSymbol(SymbolOptions(
-              geometry: center1,
+              geometry: centerCDMX,
               iconImage: 'assetImage',
               iconSize: 0.7,
-              textField: 'Cozumel',
+              textField: 'Ciudad de México',
               textOffset: Offset(0, 2)));
           mapController.addSymbol(SymbolOptions(
-              geometry: center2,
+              geometry: centerCul,
               iconImage: 'assetImage',
               iconSize: 0.7,
-              textField: 'Tijuana',
+              textField: 'Culiacán',
               textOffset: Offset(0, 2)));
           mapController.addSymbol(SymbolOptions(
-            geometry: center3,
+            geometry: centerElPaTex,
             iconImage: 'assetImage',
             iconSize: 0.7,
-            textField: 'Veracruz',
+            textField: 'El Paso Texas',
+            textOffset: Offset(0, 2),
+          ));
+          mapController.addSymbol(SymbolOptions(
+              geometry: centerGua,
+              iconImage: 'assetImage',
+              iconSize: 0.7,
+              textField: 'Guadalajara',
+              textOffset: Offset(0, 2)));
+          mapController.addSymbol(SymbolOptions(
+              geometry: centerMxl,
+              iconImage: 'assetImage',
+              iconSize: 0.7,
+              textField: 'Mexicali',
+              textOffset: Offset(0, 2)));
+          mapController.addSymbol(SymbolOptions(
+              geometry: centerMon,
+              iconImage: 'assetImage',
+              iconSize: 0.7,
+              textField: 'Monterrey',
+              textOffset: Offset(0, 2)));
+          mapController.addSymbol(SymbolOptions(
+            geometry: centerSD,
+            iconImage: 'assetImage',
+            iconSize: 0.7,
+            textField: 'San Diego',
+            textOffset: Offset(0, 2),
+          ));
+          mapController.addSymbol(SymbolOptions(
+            geometry: centerTij,
+            iconImage: 'assetImage',
+            iconSize: 0.7,
+            textField: 'Tijuana',
+            textOffset: Offset(0, 2),
+          ));
+          mapController.addSymbol(SymbolOptions(
+              geometry: centerHunt,
+              iconImage: 'assetImage',
+              iconSize: 0.7,
+              textField: 'Huntington',
+              textOffset: Offset(0, 2)));
+          mapController.addSymbol(SymbolOptions(
+              geometry: centerSnJos,
+              iconImage: 'assetImage',
+              iconSize: 0.7,
+              textField: 'San José',
+              textOffset: Offset(0, 2)));
+          mapController.addSymbol(SymbolOptions(
+              geometry: centerMcAlln,
+              iconImage: 'assetImage',
+              iconSize: 0.7,
+              textField: 'McAllen',
+              textOffset: Offset(0, 2)));
+          mapController.addSymbol(SymbolOptions(
+            geometry: centerCdJua,
+            iconImage: 'assetImage',
+            iconSize: 0.7,
+            textField: 'Ciudad Juarez',
+            textOffset: Offset(0, 2),
+          ));
+          mapController.addSymbol(SymbolOptions(
+            geometry: centerHouTex,
+            iconImage: 'assetImage',
+            iconSize: 0.7,
+            textField: 'Houston Texas',
             textOffset: Offset(0, 2),
           ));
         },
@@ -91,10 +165,10 @@ class _FullScreenMapState extends State<FullScreenMap> {
           child: Icon(Icons.ac_unit),
           onPressed: () {
             mapController.addSymbol(SymbolOptions(
-              geometry: center4,
+              geometry: centerBronwnsTex,
               iconImage: 'assetImage',
               iconSize: 0.7,
-              textField: 'Coahuila',
+              textField: 'Brownsville Texas',
               textOffset: Offset(0, 2),
             ));
           }),
