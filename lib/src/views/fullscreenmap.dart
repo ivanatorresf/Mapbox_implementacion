@@ -44,6 +44,7 @@ class _FullScreenMapState extends State<FullScreenMap> {
   void _onStyleLoaded() {
     addImageFromAsset("assetImage", "assets/custom-icon.png");
     addImageFromUrl("networkImage", "https://via.placeholder.com/50");
+    addImageFromUrl("assetImage", "assets/batman.png");
   }
 
   /// Adds an asset image to the currently displayed style
@@ -62,7 +63,9 @@ class _FullScreenMapState extends State<FullScreenMap> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: crearMapa(), floatingActionButton: botonesFlotantes());
+      body: crearMapa(),
+      floatingActionButton: botonesFlotantes(),
+    );
   }
 
   Column botonesFlotantes() {
@@ -195,6 +198,29 @@ class _FullScreenMapState extends State<FullScreenMap> {
 
             setState(() {});
           }),
+      FlatButton(
+        color: Colors.blue,
+        textColor: Colors.white,
+        disabledColor: Colors.grey,
+        disabledTextColor: Colors.black,
+        padding: EdgeInsets.all(8.0),
+        splashColor: Colors.blueAccent,
+        onPressed: () {
+          mapController.addSymbol(SymbolOptions(
+            geometry: centerGua,
+            iconImage: 'assetImage',
+            iconSize: 0.7,
+            textField: 'Guadalajara',
+            textOffset: Offset(0, 2),
+          ));
+        },
+        child: Text(
+          "Guadalajara",
+          style: TextStyle(fontSize: 20.0),
+        ),
+      ),
+      MyStatefulWidget(),
+      _cardTipo1(),
     ]);
   }
 
@@ -203,6 +229,71 @@ class _FullScreenMapState extends State<FullScreenMap> {
       styleString: selectedStyle,
       onMapCreated: _onMapCreated,
       initialCameraPosition: CameraPosition(target: latinoamerica, zoom: 3),
+    );
+  }
+
+  Widget _cardTipo1() {
+    return Card(
+        child: Column(
+      children: <Widget>[
+        ListTile(
+          contentPadding: EdgeInsets.all(20),
+          leading: Icon(Icons.photo_album, color: Colors.blue),
+          title: Text('Boutique Guadalajara'),
+          subtitle: Text(
+              'Aqui va la descripcion de la Boutique, Aqui va la descripcion de la Boutique, Aqui va la descripcion de la Boutique, Aqui va la descripcion de la Boutique,'),
+        )
+      ],
+    ));
+  }
+}
+
+class MyStatefulWidget extends StatefulWidget {
+  MyStatefulWidget({Key key}) : super(key: key);
+
+  @override
+  _MyStatefulWidgetState createState() => _MyStatefulWidgetState();
+}
+
+class _MyStatefulWidgetState extends State<MyStatefulWidget> {
+  String dropdownValue = 'Tijuana';
+  Widget build(BuildContext context) {
+    return DropdownButton<String>(
+      value: dropdownValue,
+      icon: Icon(Icons.arrow_downward),
+      iconSize: 24,
+      elevation: 16,
+      style: TextStyle(color: Colors.blue[900]),
+      underline: Container(
+        height: 2,
+        color: Colors.blue[900],
+      ),
+      onChanged: (String newValue) {
+        setState(() {
+          dropdownValue = newValue;
+        });
+      },
+      items: <String>[
+        'Beverly Hills',
+        'Ciudad de México',
+        'Culiacán',
+        'El Paso Texas',
+        'Guadalajara',
+        'Mexicali',
+        'Monterrey',
+        'San Diego',
+        'Tijuana',
+        'Huntington',
+        'San José',
+        'McAllen',
+        'Ciudad Juarez',
+        'Houston Texas',
+      ].map<DropdownMenuItem<String>>((String value) {
+        return DropdownMenuItem<String>(
+          value: value,
+          child: Text(value),
+        );
+      }).toList(),
     );
   }
 }
