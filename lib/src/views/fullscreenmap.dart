@@ -165,17 +165,6 @@ class _FullScreenMapState extends State<FullScreenMap> {
         },
       ),
       FloatingActionButton(
-          child: Icon(Icons.ac_unit),
-          onPressed: () {
-            mapController.addSymbol(SymbolOptions(
-              geometry: centerBronwnsTex,
-              iconImage: 'assetImage',
-              iconSize: 0.7,
-              textField: 'Brownsville Texas',
-              textOffset: Offset(0, 2),
-            ));
-          }),
-      FloatingActionButton(
         child: Icon(Icons.zoom_in),
         onPressed: () {
           mapController.animateCamera(CameraUpdate.zoomIn());
@@ -198,27 +187,6 @@ class _FullScreenMapState extends State<FullScreenMap> {
 
             setState(() {});
           }),
-      FlatButton(
-        color: Colors.blue,
-        textColor: Colors.white,
-        disabledColor: Colors.grey,
-        disabledTextColor: Colors.black,
-        padding: EdgeInsets.all(8.0),
-        splashColor: Colors.blueAccent,
-        onPressed: () {
-          mapController.addSymbol(SymbolOptions(
-            geometry: centerGua,
-            iconImage: 'assetImage',
-            iconSize: 0.7,
-            textField: 'Guadalajara',
-            textOffset: Offset(0, 2),
-          ));
-        },
-        child: Text(
-          "Guadalajara",
-          style: TextStyle(fontSize: 20.0),
-        ),
-      ),
       MyStatefulWidget(),
       _cardTipo1(),
     ]);
@@ -239,9 +207,83 @@ class _FullScreenMapState extends State<FullScreenMap> {
         ListTile(
           contentPadding: EdgeInsets.all(20),
           leading: Icon(Icons.photo_album, color: Colors.blue),
-          title: Text('Boutique Guadalajara'),
+          title: Text('Boutique Brownsville Texas'),
           subtitle: Text(
               'Aqui va la descripcion de la Boutique, Aqui va la descripcion de la Boutique, Aqui va la descripcion de la Boutique, Aqui va la descripcion de la Boutique,'),
+        ),
+        Row(
+          textDirection: TextDirection.rtl,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            FlatButton(
+                child: Text('Ver en el Mapa'),
+                onPressed: () {
+                  mapController.addSymbol(SymbolOptions(
+                    geometry: centerBronwnsTex,
+                    iconImage: 'assetImage',
+                    iconSize: 0.7,
+                    textField: 'Brownsville Texas',
+                    textOffset: Offset(0, 2),
+                  ));
+                }),
+          ],
+        ),
+        _cardTipo2(),
+        ListTile(
+          contentPadding: EdgeInsets.all(20),
+          leading: Icon(Icons.photo_album, color: Colors.blue),
+          title: Text('Boutique Brownsville Texas'),
+          subtitle: Text(
+              'Aqui va la descripcion de la Boutique, Aqui va la descripcion de la Boutique, Aqui va la descripcion de la Boutique, Aqui va la descripcion de la Boutique,'),
+        ),
+        Row(
+          textDirection: TextDirection.rtl,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            FlatButton(
+                child: Text('Ver en el Mapa'),
+                onPressed: () {
+                  mapController.addSymbol(SymbolOptions(
+                    geometry: centerBronwnsTex,
+                    iconImage: 'assetImage',
+                    iconSize: 0.7,
+                    textField: 'Brownsville Texas',
+                    textOffset: Offset(0, 2),
+                  ));
+                }),
+          ],
+        )
+      ],
+    ));
+  }
+
+  Widget _cardTipo2() {
+    return Card(
+        child: Column(
+      children: <Widget>[
+        ListTile(
+          contentPadding: EdgeInsets.all(20),
+          leading: Icon(Icons.photo_album, color: Colors.blue),
+          title: Text('Boutique Brownsville Texas'),
+          subtitle: Text(
+              'Aqui va la descripcion de la Boutique, Aqui va la descripcion de la Boutique, Aqui va la descripcion de la Boutique, Aqui va la descripcion de la Boutique,'),
+        ),
+        Row(
+          textDirection: TextDirection.rtl,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            FlatButton(
+                child: Text('Ver en el Mapa'),
+                onPressed: () {
+                  mapController.addSymbol(SymbolOptions(
+                    geometry: centerBronwnsTex,
+                    iconImage: 'assetImage',
+                    iconSize: 0.7,
+                    textField: 'Brownsville Texas',
+                    textOffset: Offset(0, 2),
+                  ));
+                }),
+          ],
         )
       ],
     ));
@@ -256,7 +298,9 @@ class MyStatefulWidget extends StatefulWidget {
 }
 
 class _MyStatefulWidgetState extends State<MyStatefulWidget> {
+  String value = "";
   String dropdownValue = 'Tijuana';
+
   Widget build(BuildContext context) {
     return DropdownButton<String>(
       value: dropdownValue,
@@ -268,11 +312,18 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
         height: 2,
         color: Colors.blue[900],
       ),
-      onChanged: (String newValue) {
+      onChanged: (newValue) => {
+        print(newValue.toString()),
+        setState(() {
+          dropdownValue = newValue;
+        })
+      },
+      /*onChanged: (String newValue) {
+        print(newValue.toString());
         setState(() {
           dropdownValue = newValue;
         });
-      },
+      },*/
       items: <String>[
         'Beverly Hills',
         'Ciudad de México',
