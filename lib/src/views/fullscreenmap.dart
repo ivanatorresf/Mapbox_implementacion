@@ -1,7 +1,9 @@
 import 'dart:typed_data';
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_application_1/src/provider/dataProvider.dart';
 
 import 'package:mapbox_gl/mapbox_gl.dart';
 import 'package:http/http.dart' as http;
@@ -61,13 +63,33 @@ class _FullScreenMapState extends State<FullScreenMap> {
     return mapController.addImage(name, response.bodyBytes);
   }
 
+  Size media;
+  double r, rh;
+
+  initTheme(BuildContext context) {
+    Size media = MediaQuery.of(context).size;
+    r = media.width;
+    rh = media.height;
+  }
+
+  PageController pageCards=PageController();
+  List<Widget> listCards = [];
+  int currentPage;
+
+  @override
+  void initState() {
+    currentPage=0;
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
+    initTheme(context);
     return Scaffold(
-        appBar: AppBar(title: const Text('Boutiques ')),
+        appBar: AppBar(title: const Text('Boutiques')),
         body: crearMapa(),
         floatingActionButton: botonesFlotantes(),
-        bottomNavigationBar: _cardTipo1());
+        bottomNavigationBar: cardBody());
   }
 
   Column botonesFlotantes() {
@@ -119,45 +141,44 @@ class _FullScreenMapState extends State<FullScreenMap> {
     );
   }
 
-  Widget _cardTipo1() {
-    return Card(
-        color: Colors.green,
-        child: Container(
-          width: double.infinity,
-          height: 190,
-          child: PageView(
-            controller: PageController(viewportFraction: 0.5),
-            physics: BouncingScrollPhysics(),
-            children: <Widget>[
-              _cardTipo2(),
-              _cardTipo3(),
-              _cardTipo4(),
-              _cardTipo5(),
-              _cardTipo6(),
-              _cardTipo7(),
-              _cardTipo8(),
-              _cardTipo9(),
-              _cardTipo10(),
-              _cardTipo11(),
-              _cardTipo12(),
-              _cardTipo13(),
-              _cardTipo14(),
-              _cardTipo15(),
-            ],
+  Widget cardBody() {
+    return Container(
+      width: r,
+      height: 0.5*r,
+      child: Stack(
+        children: [
+          FutureBuilder(
+            future: dataProvider.cargarDatos(),
+            builder: (context, AsyncSnapshot<List<dynamic>> snapshot){
+              snapshot.data.forEach((data) {
+                  listCards.add(card(data['title'], data['description']));
+              });
+              if(snapshot.hasData){
+                return PageView(
+                  controller: pageCards,
+                  children: listCards,
+                );
+              }else{
+                return Center(child: CircularProgressIndicator());
+              }
+            }
           ),
-        ));
+          btnLeft(),
+          btnRight()
+        ],
+      ),
+    );
   }
 
-  Widget _cardTipo2() {
-    return Card(
-        child: Column(
+  Widget card(String title, desc) {
+    return Container(width: r, height: 0.05*r,
+      child: Column(
       children: <Widget>[
         ListTile(
           contentPadding: EdgeInsets.all(20),
           leading: Icon(Icons.photo_album, color: Colors.blue),
-          title: Text('Beverly Hills'),
-          subtitle: Text(
-              'Aqui va la descripcion de la Boutique, Aqui va la descripcion de la Boutique, Aqui va la descripcion de la Boutique, Aqui va la descripcion de la Boutique,'),
+          title: Text(title),
+          subtitle: Text(desc),
         ),
         Row(
           textDirection: TextDirection.rtl,
@@ -180,419 +201,38 @@ class _FullScreenMapState extends State<FullScreenMap> {
     ));
   }
 
-  Widget _cardTipo3() {
-    return Card(
-        child: Column(
-      children: <Widget>[
-        ListTile(
-          contentPadding: EdgeInsets.all(20),
-          leading: Icon(Icons.photo_album, color: Colors.blue),
-          title: Text('Boutique Ciudad de México'),
-          subtitle: Text(
-              'Aqui va la descripcion de la Boutique, Aqui va la descripcion de la Boutique, Aqui va la descripcion de la Boutique, Aqui va la descripcion de la Boutique,'),
+  Widget btnLeft(){
+    return Positioned(left: 0, top: 0.09*rh,
+      child: Container(
+        width: 0.12*r, height: 0.15*r,
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(0.1*r)
         ),
-        Row(
-          textDirection: TextDirection.rtl,
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            FlatButton(
-                child: Text('Ver en el Mapa'),
-                onPressed: () {
-                  mapController.addSymbol(SymbolOptions(
-                    geometry: centerCDMX,
-                    iconImage: 'assetImage',
-                    iconSize: 0.7,
-                    textField: 'Ciudad de México',
-                    textOffset: Offset(0, 2),
-                  ));
-                }),
-          ],
-        )
-      ],
-    ));
+        child: FlatButton(
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(0.1*r)),
+          onPressed: (){
+            pageCards.previousPage(duration: Duration(milliseconds: 300), curve: Curves.linear);
+          },
+          child: Icon(CupertinoIcons.left_chevron, color: Colors.black87, size: 0.1*r)),
+      ),
+    );
   }
 
-  Widget _cardTipo4() {
-    return Card(
-        child: Column(
-      children: <Widget>[
-        ListTile(
-          contentPadding: EdgeInsets.all(20),
-          leading: Icon(Icons.photo_album, color: Colors.blue),
-          title: Text('Boutique Culiacan'),
-          subtitle: Text(
-              'Aqui va la descripcion de la Boutique, Aqui va la descripcion de la Boutique, Aqui va la descripcion de la Boutique, Aqui va la descripcion de la Boutique,'),
+  Widget btnRight(){
+    print('data ${listCards.length}');
+    return Positioned(right: 0, top: 0.09*rh,
+      child: Container(
+        width: 0.12*r, height: 0.15*r,
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(0.1*r)
         ),
-        Row(
-          textDirection: TextDirection.rtl,
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            FlatButton(
-                child: Text('Ver en el Mapa'),
-                onPressed: () {
-                  mapController.addSymbol(SymbolOptions(
-                    geometry: centerCul,
-                    iconImage: 'assetImage',
-                    iconSize: 0.7,
-                    textField: 'Culiacan',
-                    textOffset: Offset(0, 2),
-                  ));
-                }),
-          ],
-        )
-      ],
-    ));
-  }
-
-  Widget _cardTipo5() {
-    return Card(
-        child: Column(
-      children: <Widget>[
-        ListTile(
-          contentPadding: EdgeInsets.all(20),
-          leading: Icon(Icons.photo_album, color: Colors.blue),
-          title: Text('Boutique El Paso Texas'),
-          subtitle: Text(
-              'Aqui va la descripcion de la Boutique, Aqui va la descripcion de la Boutique, Aqui va la descripcion de la Boutique, Aqui va la descripcion de la Boutique,'),
-        ),
-        Row(
-          textDirection: TextDirection.rtl,
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            FlatButton(
-                child: Text('Ver en el Mapa'),
-                onPressed: () {
-                  mapController.addSymbol(SymbolOptions(
-                    geometry: centerElPaTex,
-                    iconImage: 'assetImage',
-                    iconSize: 0.7,
-                    textField: 'El Paso Texas',
-                    textOffset: Offset(0, 2),
-                  ));
-                }),
-          ],
-        )
-      ],
-    ));
-  }
-
-  Widget _cardTipo6() {
-    return Card(
-        child: Column(
-      children: <Widget>[
-        ListTile(
-          contentPadding: EdgeInsets.all(20),
-          leading: Icon(Icons.photo_album, color: Colors.blue),
-          title: Text('Guadalajara'),
-          subtitle: Text(
-              'Aqui va la descripcion de la Boutique, Aqui va la descripcion de la Boutique, Aqui va la descripcion de la Boutique, Aqui va la descripcion de la Boutique,'),
-        ),
-        Row(
-          textDirection: TextDirection.rtl,
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            FlatButton(
-                child: Text('Ver en el Mapa'),
-                onPressed: () {
-                  mapController.addSymbol(SymbolOptions(
-                    geometry: centerGua,
-                    iconImage: 'assetImage',
-                    iconSize: 0.7,
-                    textField: 'Guadalajara',
-                    textOffset: Offset(0, 2),
-                  ));
-                }),
-          ],
-        )
-      ],
-    ));
-  }
-
-  Widget _cardTipo7() {
-    return Card(
-        child: Column(
-      children: <Widget>[
-        ListTile(
-          contentPadding: EdgeInsets.all(20),
-          leading: Icon(Icons.photo_album, color: Colors.blue),
-          title: Text('Boutique Mexicali'),
-          subtitle: Text(
-              'Aqui va la descripcion de la Boutique, Aqui va la descripcion de la Boutique, Aqui va la descripcion de la Boutique, Aqui va la descripcion de la Boutique,'),
-        ),
-        Row(
-          textDirection: TextDirection.rtl,
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            FlatButton(
-                child: Text('Ver en el Mapa'),
-                onPressed: () {
-                  mapController.addSymbol(SymbolOptions(
-                    geometry: centerMxl,
-                    iconImage: 'assetImage',
-                    iconSize: 0.7,
-                    textField: 'Mexicali',
-                    textOffset: Offset(0, 2),
-                  ));
-                }),
-          ],
-        )
-      ],
-    ));
-  }
-
-  Widget _cardTipo8() {
-    return Card(
-        child: Column(
-      children: <Widget>[
-        ListTile(
-          contentPadding: EdgeInsets.all(20),
-          leading: Icon(Icons.photo_album, color: Colors.blue),
-          title: Text('Boutique Monterrey'),
-          subtitle: Text(
-              'Aqui va la descripcion de la Boutique, Aqui va la descripcion de la Boutique, Aqui va la descripcion de la Boutique, Aqui va la descripcion de la Boutique,'),
-        ),
-        Row(
-          textDirection: TextDirection.rtl,
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            FlatButton(
-                child: Text('Ver en el Mapa'),
-                onPressed: () {
-                  mapController.addSymbol(SymbolOptions(
-                    geometry: centerMon,
-                    iconImage: 'assetImage',
-                    iconSize: 0.7,
-                    textField: 'Monterrey',
-                    textOffset: Offset(0, 2),
-                  ));
-                }),
-          ],
-        )
-      ],
-    ));
-  }
-
-  Widget _cardTipo9() {
-    return Card(
-        child: Column(
-      children: <Widget>[
-        ListTile(
-          contentPadding: EdgeInsets.all(20),
-          leading: Icon(Icons.photo_album, color: Colors.blue),
-          title: Text('Boutique San Diego'),
-          subtitle: Text(
-              'Aqui va la descripcion de la Boutique, Aqui va la descripcion de la Boutique, Aqui va la descripcion de la Boutique, Aqui va la descripcion de la Boutique,'),
-        ),
-        Row(
-          textDirection: TextDirection.rtl,
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            FlatButton(
-                child: Text('Ver en el Mapa'),
-                onPressed: () {
-                  mapController.addSymbol(SymbolOptions(
-                    geometry: centerSD,
-                    iconImage: 'assetImage',
-                    iconSize: 0.7,
-                    textField: 'San Diego',
-                    textOffset: Offset(0, 2),
-                  ));
-                }),
-          ],
-        )
-      ],
-    ));
-  }
-
-  Widget _cardTipo10() {
-    return Card(
-        child: Column(
-      children: <Widget>[
-        ListTile(
-          contentPadding: EdgeInsets.all(20),
-          leading: Icon(Icons.photo_album, color: Colors.blue),
-          title: Text('Boutique Tijuana'),
-          subtitle: Text(
-              'Aqui va la descripcion de la Boutique, Aqui va la descripcion de la Boutique, Aqui va la descripcion de la Boutique, Aqui va la descripcion de la Boutique,'),
-        ),
-        Row(
-          textDirection: TextDirection.rtl,
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            FlatButton(
-                child: Text('Ver en el Mapa'),
-                onPressed: () {
-                  mapController.addSymbol(SymbolOptions(
-                    geometry: centerTij,
-                    iconImage: 'assetImage',
-                    iconSize: 0.7,
-                    textField: 'Tijuana',
-                    textOffset: Offset(0, 2),
-                  ));
-                }),
-          ],
-        )
-      ],
-    ));
-  }
-
-  Widget _cardTipo11() {
-    return Card(
-        child: Column(
-      children: <Widget>[
-        ListTile(
-          contentPadding: EdgeInsets.all(20),
-          leading: Icon(Icons.photo_album, color: Colors.blue),
-          title: Text('Boutique Huntington'),
-          subtitle: Text(
-              'Aqui va la descripcion de la Boutique, Aqui va la descripcion de la Boutique, Aqui va la descripcion de la Boutique, Aqui va la descripcion de la Boutique,'),
-        ),
-        Row(
-          textDirection: TextDirection.rtl,
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            FlatButton(
-                child: Text('Ver en el Mapa'),
-                onPressed: () {
-                  mapController.addSymbol(SymbolOptions(
-                    geometry: centerHunt,
-                    iconImage: 'assetImage',
-                    iconSize: 0.7,
-                    textField: 'Huntington',
-                    textOffset: Offset(0, 2),
-                  ));
-                }),
-          ],
-        )
-      ],
-    ));
-  }
-
-  Widget _cardTipo12() {
-    return Card(
-        child: Column(
-      children: <Widget>[
-        ListTile(
-          contentPadding: EdgeInsets.all(20),
-          leading: Icon(Icons.photo_album, color: Colors.blue),
-          title: Text('Boutique San José'),
-          subtitle: Text(
-              'Aqui va la descripcion de la Boutique, Aqui va la descripcion de la Boutique, Aqui va la descripcion de la Boutique, Aqui va la descripcion de la Boutique,'),
-        ),
-        Row(
-          textDirection: TextDirection.rtl,
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            FlatButton(
-                child: Text('Ver en el Mapa'),
-                onPressed: () {
-                  mapController.addSymbol(SymbolOptions(
-                    geometry: centerSnJos,
-                    iconImage: 'assetImage',
-                    iconSize: 0.7,
-                    textField: 'San José',
-                    textOffset: Offset(0, 2),
-                  ));
-                }),
-          ],
-        )
-      ],
-    ));
-  }
-
-  Widget _cardTipo13() {
-    return Card(
-        child: Column(
-      children: <Widget>[
-        ListTile(
-          contentPadding: EdgeInsets.all(20),
-          leading: Icon(Icons.photo_album, color: Colors.blue),
-          title: Text('Boutique McAllen'),
-          subtitle: Text(
-              'Aqui va la descripcion de la Boutique, Aqui va la descripcion de la Boutique, Aqui va la descripcion de la Boutique, Aqui va la descripcion de la Boutique,'),
-        ),
-        Row(
-          textDirection: TextDirection.rtl,
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            FlatButton(
-                child: Text('Ver en el Mapa'),
-                onPressed: () {
-                  mapController.addSymbol(SymbolOptions(
-                    geometry: centerMcAlln,
-                    iconImage: 'assetImage',
-                    iconSize: 0.7,
-                    textField: 'McAllen',
-                    textOffset: Offset(0, 2),
-                  ));
-                }),
-          ],
-        )
-      ],
-    ));
-  }
-
-  Widget _cardTipo14() {
-    return Card(
-        child: Column(
-      children: <Widget>[
-        ListTile(
-          contentPadding: EdgeInsets.all(20),
-          leading: Icon(Icons.photo_album, color: Colors.blue),
-          title: Text('Boutique Ciudad Juarez'),
-          subtitle: Text(
-              'Aqui va la descripcion de la Boutique, Aqui va la descripcion de la Boutique, Aqui va la descripcion de la Boutique, Aqui va la descripcion de la Boutique,'),
-        ),
-        Row(
-          textDirection: TextDirection.rtl,
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            FlatButton(
-                child: Text('Ver en el Mapa'),
-                onPressed: () {
-                  mapController.addSymbol(SymbolOptions(
-                    geometry: centerCdJua,
-                    iconImage: 'assetImage',
-                    iconSize: 0.7,
-                    textField: 'Ciudad Juarez',
-                    textOffset: Offset(0, 2),
-                  ));
-                }),
-          ],
-        )
-      ],
-    ));
-  }
-
-  Widget _cardTipo15() {
-    return Card(
-        child: Column(
-      children: <Widget>[
-        ListTile(
-          contentPadding: EdgeInsets.all(20),
-          leading: Icon(Icons.photo_album, color: Colors.blue),
-          title: Text('Boutique Houston Texas'),
-          subtitle: Text(
-              'Aqui va la descripcion de la Boutique, Aqui va la descripcion de la Boutique, Aqui va la descripcion de la Boutique, Aqui va la descripcion de la Boutique,'),
-        ),
-        Row(
-          textDirection: TextDirection.rtl,
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            FlatButton(
-                child: Text('Ver en el Mapa'),
-                onPressed: () {
-                  mapController.addSymbol(SymbolOptions(
-                    geometry: centerHouTex,
-                    iconImage: 'assetImage',
-                    iconSize: 0.7,
-                    textField: 'Houston Texas',
-                    textOffset: Offset(0, 2),
-                  ));
-                }),
-          ],
-        )
-      ],
-    ));
+        child: FlatButton(
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(0.1*r)),
+          onPressed: (){
+            pageCards.nextPage(duration: Duration(milliseconds: 300), curve: Curves.linear);
+          },
+          child: Icon(CupertinoIcons.right_chevron, color: Colors.black87, size: 0.1*r)),
+      ),
+    );
   }
 }
