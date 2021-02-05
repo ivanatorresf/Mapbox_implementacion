@@ -13,7 +13,6 @@ class _DataProdiver {
     final resp = await rootBundle.loadString('data/distribuidoras.json');
     Map dataMap = json.decode(resp);
     datos = dataMap['datos'];
-    print(dataMap['datos']);
     return datos;
   }
 

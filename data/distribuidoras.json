@@ -2,59 +2,78 @@
     "datos":[
         {
             "title":"Beverly Hills",
-            "description":"Aqui va la descripcion de la Boutique, Aqui va la descripcion de la Boutique, Aqui va la descripcion de la Boutique, Aqui va la descripcion de la Boutique,')"
+            "description":"Aqui va la descripcion de la Boutique, Aqui va la descripcion de la Boutique",
+            "ubicacion":"34.0825439:-118.4345535"
         },
         {
             "title":"Ciudad de México",
-            "description":"Aqui va la descripcion de la Boutique, Aqui va la descripcion de la Boutique, Aqui va la descripcion de la Boutique, Aqui va la descripcion de la Boutique,')"
+            "description":"Aqui va la descripcion de la Boutique, Aqui va la descripcion de la Boutique",
+            "ubicacion":"19.39068:-99.2836999"
         },
         {
             "title":"Culiacan",
-            "description":"Aqui va la descripcion de la Boutique, Aqui va la descripcion de la Boutique, Aqui va la descripcion de la Boutique, Aqui va la descripcion de la Boutique,')"
+            "description":"Aqui va la descripcion de la Boutique, Aqui va la descripcion de la Boutique",
+            "ubicacion":"24.8049008:-107.4933547"
         },
         {
             "title":"El Paso Texas",
-            "description":"Aqui va la descripcion de la Boutique, Aqui va la descripcion de la Boutique, Aqui va la descripcion de la Boutique, Aqui va la descripcion de la Boutique,')"
+            "description":"Aqui va la descripcion de la Boutique, Aqui va la descripcion de la Boutique",
+            "ubicacion":"31.8110563:-106.5646034"
         },
         {
             "title":"Guadalajara",
-            "description":"Aqui va la descripcion de la Boutique, Aqui va la descripcion de la Boutique, Aqui va la descripcion de la Boutique, Aqui va la descripcion de la Boutique,')"
+            "description":"Aqui va la descripcion de la Boutique, Aqui va la descripcion de la Boutique",
+            "ubicacion":"20.6737777:-103.4054538"
         },
         {
             "title":"Mexicali",
-            "description":"Aqui va la descripcion de la Boutique, Aqui va la descripcion de la Boutique, Aqui va la descripcion de la Boutique, Aqui va la descripcion de la Boutique,')"
+            "description":"Aqui va la descripcion de la Boutique, Aqui va la descripcion de la Boutique",
+            "ubicacion":"32.6137391:-115.5203314"
         },
         {
             "title":"Monterrey",
-            "description":"Aqui va la descripcion de la Boutique, Aqui va la descripcion de la Boutique, Aqui va la descripcion de la Boutique, Aqui va la descripcion de la Boutique,')"
+            "description":"Aqui va la descripcion de la Boutique, Aqui va la descripcion de la Boutique",
+            "ubicacion":"25.8695013:-103.0146702"
         },
         {
             "title":"San Diego",
-            "description":"Aqui va la descripcion de la Boutique, Aqui va la descripcion de la Boutique, Aqui va la descripcion de la Boutique, Aqui va la descripcion de la Boutique,')"
+            "description":"Aqui va la descripcion de la Boutique, Aqui va la descripcion de la Boutique",
+            "ubicacion":"32.8242404:-117.3891708"
         },
         {
             "title":"Tijuana",
-            "description":"Aqui va la descripcion de la Boutique, Aqui va la descripcion de la Boutique, Aqui va la descripcion de la Boutique, Aqui va la descripcion de la Boutique,')"
+            "description":"Aqui va la descripcion de la Boutique, Aqui va la descripcion de la Boutique",
+            "ubicacion":"32.49674:-117.0178474"
         },
         {
             "title":"Huntington",
-            "description":"Aqui va la descripcion de la Boutique, Aqui va la descripcion de la Boutique, Aqui va la descripcion de la Boutique, Aqui va la descripcion de la Boutique,')"
+            "description":"Aqui va la descripcion de la Boutique, Aqui va la descripcion de la Boutique",
+            "ubicacion":"33.5886801:-118.2697613"
         },
         {
             "title":"San José",
-            "description":"Aqui va la descripcion de la Boutique, Aqui va la descripcion de la Boutique, Aqui va la descripcion de la Boutique, Aqui va la descripcion de la Boutique,')"
+            "description":"Aqui va la descripcion de la Boutique, Aqui va la descripcion de la Boutique",
+            "ubicacion":"37.2967792:-121.9574983"
         },
         {
             "title":"McAllen",
-            "description":"Aqui va la descripcion de la Boutique, Aqui va la descripcion de la Boutique, Aqui va la descripcion de la Boutique, Aqui va la descripcion de la Boutique,')"
+            "description":"Aqui va la descripcion de la Boutique, Aqui va la descripcion de la Boutique",
+            "ubicacion":"26.2259141:-98.396727"
         },
         {
             "title":"Ciudad Juarez",
-            "description":"Aqui va la descripcion de la Boutique, Aqui va la descripcion de la Boutique, Aqui va la descripcion de la Boutique, Aqui va la descripcion de la Boutique,')"
+            "description":"Aqui va la descripcion de la Boutique, Aqui va la descripcion de la Boutique",
+            "ubicacion":"31.6538179:-106.5890216"
         },
         {
             "title":"Houston Texas",
-            "description":"Aqui va la descripcion de la Boutique, Aqui va la descripcion de la Boutique, Aqui va la descripcion de la Boutique, Aqui va la descripcion de la Boutique,')"
+            "description":"Aqui va la descripcion de la Boutique, Aqui va la descripcion de la Boutique",
+            "ubicacion":"29.8168824:-95.6814853"
+        },
+        {
+            "title":"BronwnsTex",
+            "description":"Aqui va la descripcion de la Boutique, Aqui va la descripcion de la Boutique",
+            "ubicacion":"26.0288184:-97.5991826"
         }
     ]
 }
